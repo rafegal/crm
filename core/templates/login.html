@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" >
+
+</head>
+
+<body class="d-flex flex-column">
+  <div class="sidenav">
+         <div class="login-main-text">
+            <h2>CRM<br>Sistema de Gestão de Clientes</h2>            
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form action="submit", method="POST">{% csrf_token %}
+                  <div class="form-group">
+                     <label>Usuário</label>
+                     <input type="text" class="form-control" placeholder="Usuário" name="username">
+                  </div>
+                  <div class="form-group">
+                     <label>Senha</label>
+                     <input type="password" class="form-control" placeholder="Senha" name="password">
+                  </div>
+                  {% if messages %}
+                      {% for message in messages %}
+                          <div class="alert alert-danger">{{ message }}</div>
+                      {% endfor %}
+
+                  {% endif %}
+                  <button type="submit" class="btn btn-black">Login</button>                 
+               </form>
+            </div>
+         </div>
+      </div>
+</body>
+</html>

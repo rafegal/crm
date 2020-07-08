@@ -1,0 +1,64 @@
+{% extends "model-page.html"%}
+
+{% block content %}
+    <h2>Clientes</h2>
+
+    <a href="{% url "customer:customer-create" %}">
+        <button type="button" class="btn btn-success" 
+            style="float: right; margin-bottom: 5px">Adicionar</button>
+    </a>
+
+    <form>
+        <div class="form-group mb-1">
+            <input class="form-control" type="text" name="name" placeholder="Buscar por nome...">            
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    <form>
+
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Cidade</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customer_list%}
+                <tr>
+                    <td><a href="{{ customer.get_absolute_url }}">{{ customer.get_full_name }}</a></td>
+                    <td>{{ customer.get_full_city }}</td>
+                    <td>{{ customer.get_full_phone_number }}</td>
+                    <td>{{ customer.email }}</td>
+                    <form method="post" action="{{ customer.get_delete_url }}">{% csrf_token %}
+                        <td><button type="submit" class="btn btn-danger">Excluir</button></td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" 
+                href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+        {% endif %}
+
+        {% for object in page_obj.paginator.page_range %}
+            <li class="page-item"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" 
+                href="?page={{ page_obj.next_page_number }}">Próximo</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Próximo</a></li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
